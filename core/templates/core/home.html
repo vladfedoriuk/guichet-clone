@@ -1,0 +1,12 @@
+{% extends 'core/base.html' %}
+{% block content %}
+
+	<h1>Bienvenue sur notre site d'événements !</h1>
+	<h2>Prochains événements à venir :</h2>
+	<ul>
+	{% for event in events %}
+		<li><a href="{% url 'event_detail' event.id %}">{{ event.name }}</a></li>
+	{% endfor %}
+	</ul>
+
+{% endblock %}
