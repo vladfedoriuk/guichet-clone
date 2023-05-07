@@ -1,25 +1,67 @@
-<!DOCTYPE html>
-<html>
-<head>
-	<meta charset="UTF-8">
-	<title>Achat de billet - BilletSimple</title>
-	<link rel="stylesheet" type="text/css" href="style.css">
-</head>
-<body>
-	<div class="container">
-		<h1>Achat de billet</h1>
-		<form method="post" action="/buy">
-			<label for="event_name">Nom de l'événement</label>
-			<input type="text" name="event_name" id="event_name" required>
-			<label for="ticket_type">Type de billet</label>
-			<select name="ticket_type" id="ticket_type">
-				<option value="standard">Standard</option>
-				<option value="vip">VIP</option>
-			</select>
-			<label for="quantity">Quantité</label>
-			<input type="number" name="quantity" id="quantity" min="1" required>
-			<button type="submit">Acheter</button>
-		</form>
-	</div>
-</body>
-</html>
+{% extends 'core/base.html' %}
+{% block content %}
+
+
+
+<a class="ret" href="file:///C:/xampp/htdocs/projet/jach.html">X</a>
+    <div class="car">
+        <div class="g">
+            <img src="csss/Screenshot 2023-04-14 135333.png" alt="">
+        </div>
+        <div class="don cart">
+
+            <h2 style="margin-bottom: 30px;">Mon panier</h2>
+            <table table border="1">
+                <thead>
+                    <tr>
+						<th>titre</th>
+                        <th>prix</th>
+                        <th>quantite</th>
+                        <th>total</th>
+                    </tr>
+                </thead>
+                <tbody>
+					{% for item in order.get_cart_items %}
+                    <tr>
+						<td>{{item.event.name}}</td>
+                        <td>{{item.event.price}}</td>
+                        <td>
+							{{item.quantity}}
+							<div style="display: flex;">
+								<form method="post" action="{% url 'quantity'%}">
+									{% csrf_token %}
+									<input name="orderitem_id" value="{{item.pk}}" hidden/>
+									<input name="remove" value="true" hidden/>
+									<button class="quantity-button minus">-</button>
+								</form>
+								<form method="post" action="{% url 'quantity'%}">
+									{% csrf_token %}
+									<input name="orderitem_id" value="{{item.pk}}" hidden/>
+									<input name="add" value="true" hidden/>
+									<button class="quantity-button plus">+</button>
+								</form>
+							</div>
+						</td>
+						<td>{{item.get_total}}</td>
+						<td>
+							<form method="post" action="{% url 'remove'%}">
+								{% csrf_token %}
+								<input name="orderitem_id" value="{{item.pk}}" hidden/>
+								<button class="remove-button" type='submit'>Remove</button>
+							</form>
+						</td>
+                    </tr>
+					{% endfor %}
+                </tbody>
+            </table>
+
+        </div>
+        <br>
+        <br>
+        <a class="c" href="{% url 'home'%}">Continuer mes achats</a>
+        <a class="f" href="#">Finaliser ma commmande</a>
+
+    </div>
+    </div>
+
+{% endblock %}

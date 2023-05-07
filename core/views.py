@@ -1,17 +1,19 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth import login, authenticate, logout
 from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from django.db.models import Q
-from .models import Event
+from .models import Event, Category, Order, OrderItem
 
 
 def home(request):
-    events = Event.objects.order_by('-date')[:3]
+    events = Event.objects.order_by('-date')[:5]
     context = {
         'events': events
     }
     return render(request, 'core/home.html', context)
+
 
 
 def event_list(request):
@@ -26,12 +28,13 @@ def event_list(request):
         )
 
     if category:
+        category = get_object_or_404(Category, name=category)
         events = events.filter(category=category)
 
     context = {
         'events': events
     }
-    return render(request, 'core/event_list.html', context)
+    return render(request, 'core/home.html', context)
 
 
 def event_detail(request, event_id):
@@ -73,6 +76,60 @@ def user_register(request):
 def logout_view(request):
     logout(request)
     return redirect('home')
+
+
+@login_required
+def click_jach(request):
+    """
+    create order and redirect to cart
+    """
+    if request.method=='POST':
+        event_id=request.POST.get('event_id')
+        event=get_object_or_404(Event, pk=event_id)
+        # create order with auth user
+        order, created = Order.objects.get_or_create(customer=request.user)
+        orderitem, created = OrderItem.objects.get_or_create(order=order, event=event, price=event.price)
+        if not created:
+            orderitem.quantity = orderitem.quantity+1
+            orderitem.save()
+    # pass the order as the context variable
+    order = get_object_or_404(Order, customer=request.user)
+    return render(request, 'core/buy_ticket.html', {'order':order})
+
+
+@login_required
+def click_remove(request):
+    """
+    delete orderitem
+    """
+    if request.method=='POST':
+        orderitem_id=request.POST.get('orderitem_id')
+        orderitem=get_object_or_404(OrderItem, pk=orderitem_id)
+        orderitem.delete()
+    return redirect('order')
+
+
+@login_required
+def quantite(request):
+    """
+    Add or remove one item
+    """
+    if request.method=='POST':
+        orderitem_id=request.POST.get('orderitem_id')
+        orderitem=get_object_or_404(OrderItem, pk=orderitem_id)
+        add=request.POST.get('add')
+        remove=request.POST.get('remove')
+        if add:
+            orderitem.quantity = orderitem.quantity + 1
+            orderitem.save()
+        elif remove:
+            if orderitem.quantity == 1:
+                orderitem.delete()
+            else:
+                orderitem.quantity = orderitem.quantity - 1
+                orderitem.save()
+
+    return redirect('order')
 
 
 def buy_ticket(request, event_id):

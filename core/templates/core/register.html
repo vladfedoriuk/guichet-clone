@@ -7,16 +7,29 @@
 	<link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700" rel="stylesheet">
 	<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.min.css" rel="stylesheet">
 	<link rel="stylesheet" type="text/css" href="style.css">
+	{%load static%}
+    <link rel="stylesheet" type="text/css" href="{% static 'core/main.css' %}">
 </head>
 <body>
-	<div class="container">
+	<div class="pos">
 		<h1>Inscription</h1>
 		<form action="" method="post">
 			{% csrf_token %}
-			{{form.as_p}}
-			<button type="submit">S'inscrire</button>
+			<div style="margin-left: 20px; margin-top: 5px;">
+				Username
+			</div>
+			{{ form.username }}
+			<div style="margin-left: 20px; margin-top: 5px;">
+				Password
+			</div>
+			{{ form.password1 }}
+			<div style="margin-left: 20px; margin-top: 5px;">
+				Confirm password
+			</div>
+			{{ form.password2 }}
+			<input type="submit">
 		</form>
-		<p>Déjà inscrit? <a href="login.html">Se connecter</a></p>
+		<p>Déjà inscrit? <a href="{% url 'login' %}">Se connecter</a></p>
 	</div>
 </body>
 </html>

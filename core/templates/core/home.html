@@ -1,12 +1,44 @@
 {% extends 'core/base.html' %}
 {% block content %}
 
-	<h1>Bienvenue sur notre site d'événements !</h1>
-	<h2>Prochains événements à venir :</h2>
-	<ul>
-	{% for event in events %}
-		<li><a href="{% url 'event_detail' event.id %}">{{ event.name }}</a></li>
-	{% endfor %}
-	</ul>
+	<!-- <div class="desc">
+		{%load static%}
+		<img src="{% static 'core/images/hero.jpg' %}" alt="">
+		<p class="des">tickets.ma est une plateforme innovante dédiée aux bonnes affaires en ligne. Véritable guichet unique, l’application vous permettent d’acheter en un clic vos tickets d’événements à prix coûtant ou de profiter de deals à prix réduits. Tout est
+			simplifié pour vous permettre d’économiser du temps, de l’énergie et de l’argent. Chaque produit ou service qui vous intéresse fait l’objet d’un compte à rebours.</p>
+	</div>
+	<h1>évenement à decouvrir !!</h1> -->
+
+	<div class="imag " style="margin-top: 10%;">
+
+		<div class="YSS" style="display: flex;">
+			{% for event in events %}
+			<div class="cadre1" style="margin-right: 15px;">
+				<a href="{% url 'event_detail' event.id %}">
+				<img style="width: 100%; border-radius: 15px;" src={{ event.image.url }} alt=" ">
+				<br>
+				<div class="genre">
+					<p>{{event.category.name}}</p>
+				</div>
+				<h3>{{ event.name }}</h3>
+				<i class="fa fa-map-marker" aria-hidden="true">{{ event.location }}</i>
+				<br>
+				<i class="fa fa-bell" aria-hidden="true">  <b>00</b> j <b> 12</b> h <b>03</b> m <b>45</b> s</i>
+				<br>
+				<p class="de">A PARTIR DE:
+					<div class="prix">{{ event.price }} <b class="MAD">MAD</b> </div>
+				</p>
+				<form method="post" action="{% url 'order' %}">
+					{% csrf_token %}
+					<input name="event_id" value="{{event.id}}" hidden/>
+					<button class="jach" type="submit">J'achete</button>
+				</form>
+
+				</a>
+			</div>
+			{% endfor %}
+		</div>
+
+    </div>
 
 {% endblock %}
