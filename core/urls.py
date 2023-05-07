@@ -14,4 +14,6 @@ urlpatterns = [
     path('events/order/remove/', views.click_remove, name='remove'),
     path('events/order/modify/', views.quantite, name='quantity'),
     path('events/<int:event_id>/buy/', views.buy_ticket, name='buy_ticket'),
+
+    path('profile/', views.profile, name='profile'),
 ]

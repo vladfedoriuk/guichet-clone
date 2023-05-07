@@ -132,6 +132,7 @@ def quantite(request):
     return redirect('order')
 
 
+@login_required
 def buy_ticket(request, event_id):
     event = Event.objects.get(id=event_id)
     if request.method == 'POST':
@@ -143,3 +144,22 @@ def buy_ticket(request, event_id):
             'event': event
         }
         return render(request, 'core/templates/buy_ticket.html', context)
+
+
+@login_required
+def profile(request):
+    user=request.user
+    if request.method=='POST':
+        first_name=request.POST.get('first_name')
+        last_name=request.POST.get('last_name')
+        email=request.POST.get('email')
+        if first_name:
+            user.first_name=first_name
+        if last_name:
+            user.last_name=last_name
+        if email:
+            user.email=email
+        user.save()
+
+    return render(request, 'core/profile.html', {'user':user})
+

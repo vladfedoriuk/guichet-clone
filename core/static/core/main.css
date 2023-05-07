@@ -454,4 +454,32 @@ input[type="submit"]:hover {
     color: black;
     text-decoration: none;
 }
+.info {
+    margin-top: 13%;
+    background-color: gray;
+    border-radius: 5%;
+    width: 80%;
+    margin-left: 10%;
+}
 
+.modif {
+    margin-top: 3%;
+    background-color: gray;
+    border-radius: 5%;
+    width: 80%;
+    margin-left: 10%;
+}
+
+h6 {
+    font-size: 30px;
+    font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+    padding: 40px;
+}
+
+.donees {
+    padding-top: 30px;
+    padding-bottom: 30px;
+    padding-left: 40px;
+    font-size: 16px;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}

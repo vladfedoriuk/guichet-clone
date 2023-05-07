@@ -15,7 +15,7 @@
         <img src="{% static 'core/images/logo.png' %}" alt=" ">
     </a>
         <div class="nous ">Qui sommes nous?</div>
-        <a href="file:///C:/xampp/htdocs/projet/vide.html" class="pa"><i class="fa fa-cart-plus" aria-hidden="true">Panier</i></a>
+        <a href="{% url 'order' %}" class="pa"><i class="fa fa-cart-plus" aria-hidden="true">Panier</i></a>
 
         <form class="search " method="get" action="{%url 'event_list' %}">
             <input type="search" name="q" placeholder="type to search ">
@@ -35,7 +35,7 @@
                 </div>
                 <div>
                 {% if  request.user.is_authenticated %}
-                    <a style="margin-right: 15px; font-size: large; color: aliceblue;" href="file:///C:/xampp/htdocs/projet/profil.html"><i class="fa fa-user-circle " aria-hidden="true ">Profil</i></a>
+                    <a style="margin-right: 15px; font-size: large; color: aliceblue;" href="{% url 'profile' %}"><i class="fa fa-user-circle " aria-hidden="true ">Profile</i></a>
                 {%else%}
                     <a style="margin-right: 15px; font-size: large; color: aliceblue;" href= {%url "login" %} ><i class="fa fa-user-circle " aria-hidden="true ">Login</i></a>
                 {%endif%}
