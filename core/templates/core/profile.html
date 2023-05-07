@@ -1,0 +1,47 @@
+{% extends 'core/base.html' %}
+{% block content %}
+
+<div class="info">
+    <h6>Mes informations</h6>
+    <hr>
+    <div class="donees">
+
+        Nom:
+        {% if user.last_name %}
+        {{user.last_name}}
+        {% else %}
+        Entrez votre nom
+        {% endif %}
+
+        <br>
+        Prénom:
+        {% if user.first_name %}
+        {{user.first_name}}
+        {% else %}
+        Entrez votre prenom
+        {% endif %}
+
+        <br>
+        Email:
+        {% if user.email %}
+        {{user.email}}
+        {% else %}
+        Entrez votre email
+        {% endif %}
+    </div>
+</div>
+<div class="modif">
+    <h6>Modifier mes informations</h6>
+    <hr>
+    <form method="post" action="{% url 'profile' %}">
+        {% csrf_token %}
+        <input type="text" placeholder="Nom" name="last_name">
+        <input type="text" placeholder="Prenom" name="first_name">
+        <input type="text" placeholder="votre@email.com" name="email">
+        <br> <input type="submit" value="modifier">
+    </form>
+
+</div>
+
+
+{% endblock %}
