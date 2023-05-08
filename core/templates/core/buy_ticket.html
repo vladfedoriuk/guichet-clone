@@ -64,9 +64,13 @@
         </div>
         <br>
         <br>
-        <a class="c" href="{% url 'home'%}">Continuer mes achats</a>
+
         {% if order.get_cart_items.count > 0 %}
-            <a class="f" href="#">Finaliser ma commmande</a>
+        <form method="POST" action={% url 'buy_ticket'%}>
+            {% csrf_token %}
+            <a class="c" href="{% url 'home'%}">Continuer mes achats</a>
+            <button class="buy-button" type="submit" >Finaliser ma commmande</button>
+        </form>
         {% endif %}
 
     </div>

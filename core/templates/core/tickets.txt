@@ -1,0 +1,5 @@
+Merci!
+Les coici vos tickets:
+{% for item in items %}
+    {{item.event.name}},
+{% endfor %}

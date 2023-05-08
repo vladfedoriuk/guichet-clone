@@ -16,7 +16,7 @@
 					<form method="post" action="{% url 'order' %}">
 					{% csrf_token %}
 					<input name="event_id" value="{{event.id}}" hidden/>
-					<button class="jach" type="submit">J'achete</button>
+					<button class="buy-button" type="submit">J'achete</button>
 				</form>
 
 				{% else %}

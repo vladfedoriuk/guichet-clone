@@ -1,14 +1,18 @@
 from django.shortcuts import render, redirect, get_object_or_404
+from django.http import HttpResponse
 from django.contrib.auth import login, authenticate, logout
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from django.db.models import Q
 from .models import Event, Category, Order, OrderItem
+from django.core.mail import send_mail, BadHeaderError
+from django.template.loader import render_to_string
+from django.db.models.query_utils import Q
 
 
 def home(request):
-    events = Event.objects.order_by('-date')[:5]
+    events = Event.objects.order_by('-date')
     context = {
         'events': events
     }
@@ -93,7 +97,7 @@ def click_jach(request):
             orderitem.quantity = orderitem.quantity+1
             orderitem.save()
     # pass the order as the context variable
-    order = get_object_or_404(Order, customer=request.user)
+    order = Order.objects.filter(customer=request.user)
     return render(request, 'core/buy_ticket.html', {'order':order})
 
 
@@ -133,17 +137,29 @@ def quantite(request):
 
 
 @login_required
-def buy_ticket(request, event_id):
-    event = Event.objects.get(id=event_id)
+def buy_ticket(request):
+
     if request.method == 'POST':
-        # Process the payment and send confirmation email
-        messages.success(request, 'Your ticket has been purchased!')
-        return redirect('event_detail', event_id=event.id)
-    else:
-        context = {
-            'event': event
+        subject = "Merci!"
+        email_template_name = "core/tickets.txt"
+        order = get_object_or_404(Order, customer=request.user)
+        orderitems = OrderItem.objects.filter(order=order)
+        c = {
+            "items":orderitems,
         }
-        return render(request, 'core/templates/buy_ticket.html', context)
+        email = render_to_string(email_template_name, c)
+        try:
+            send_mail(
+            subject,
+            email,
+            'thedjangoguy@gmail.com',#the email you set in the SMTP config
+            [request.user.email],
+            fail_silently=False)
+            order.delete()
+        except BadHeaderError:
+            return HttpResponse('Invalid header found.')
+        messages.success(request, 'Your ticket has been purchased!')
+        return redirect('home')
 
 
 @login_required
