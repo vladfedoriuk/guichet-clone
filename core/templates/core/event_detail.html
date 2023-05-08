@@ -1,20 +1,28 @@
-<!DOCTYPE html>
-<html>
-<head>
-	<title>Détails de l'événement</title>
-</head>
-<body>
-	<h1>{{ event.name }}</h1>
-	<p>{{ event.description }}</p>
-	<p>Date : {{ event.date }}</p>
-	<p>Prix : {{ event.price }} €</p>
-	{% if user.is_authenticated %}
-		<form method="POST" action="{% url 'buy_ticket' event.id %}">
-			{% csrf_token %}
-			<button type="submit">Acheter un billet</button>
-		</form>
-	{% else %}
-		<p><a href="{% url 'login' %}">Connectez-vous</a> pour acheter un billet.</p>
-	{% endif %}
-</body>
-</html>
+{% extends 'core/base.html' %}
+{% block content %}
+
+	<div class="product-container" style=" margin: 15% auto ;">
+		<img class="product-image" src="{{ event.image.url }}" alt="Product Image">
+		<div class="product-info">
+			<div>
+				<h1>{{ event.name }}</h1>
+				<p>{{ event.description }}</p>
+			</div>
+			<div>
+				<p class="price">{{ event.price }} MAD</p>
+
+				{% if user.is_authenticated %}
+
+					<form method="post" action="{% url 'order' %}">
+					{% csrf_token %}
+					<input name="event_id" value="{{event.id}}" hidden/>
+					<button class="jach" type="submit">J'achete</button>
+				</form>
+
+				{% else %}
+					<p><a href="{% url 'login' %}">Connectez-vous</a> pour acheter un billet.</p>
+				{% endif %}
+			</div>
+		</div>
+	</div>
+	{% endblock %}

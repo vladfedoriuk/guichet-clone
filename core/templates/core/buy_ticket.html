@@ -11,6 +11,7 @@
         <div class="don cart">
 
             <h2 style="margin-bottom: 30px;">Mon panier</h2>
+            {% if order.get_cart_items.count > 0 %}
             <table table border="1">
                 <thead>
                     <tr>
@@ -21,6 +22,7 @@
                     </tr>
                 </thead>
                 <tbody>
+
 					{% for item in order.get_cart_items %}
                     <tr>
 						<td>{{item.event.name}}</td>
@@ -52,14 +54,20 @@
 						</td>
                     </tr>
 					{% endfor %}
+
                 </tbody>
             </table>
+            {% else %}
+                Rien n'est dans votre panier.
+            {% endif %}
 
         </div>
         <br>
         <br>
         <a class="c" href="{% url 'home'%}">Continuer mes achats</a>
-        <a class="f" href="#">Finaliser ma commmande</a>
+        {% if order.get_cart_items.count > 0 %}
+            <a class="f" href="#">Finaliser ma commmande</a>
+        {% endif %}
 
     </div>
     </div>

@@ -192,7 +192,7 @@ h1 {
     background-color: antiquewhite;
     margin-left: 20px;
     width: 260px;
-    height: 400px;
+    /* height: 400px; */
     display: flex;
     margin-top: 3%;
 }
@@ -202,7 +202,7 @@ h1 {
     background-color: antiquewhite;
     margin-left: 0%;
     width: 300px;
-    height: 400px;
+    /* height: 400px; */
 }
 .de {
     margin-left: 10px;
@@ -482,4 +482,58 @@ h6 {
     padding-left: 40px;
     font-size: 16px;
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+.product-container {
+    display: flex;
+    align-items: center;
+}
+
+.product-image {
+    flex: 1;
+    max-width: 50%;
+    padding: 10px;
+    box-sizing: border-box;
+}
+
+.product-info {
+    flex: 1;
+    max-width: 50%;
+    padding: 10px;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+h1 {
+    font-size: 28px;
+    margin: 0;
+    margin-bottom: 10px;
+}
+
+p {
+    font-size: 18px;
+    margin: 0;
+    margin-bottom: 10px;
+}
+
+.price {
+    font-size: 24px;
+    font-weight: bold;
+    margin: 0;
+    margin-bottom: 10px;
+}
+
+.order-button {
+    background-color: blue;
+    color: white;
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 20px;
+}
+
+.order-button:hover {
+    background-color: darkblue;
 }

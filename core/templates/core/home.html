@@ -1,16 +1,10 @@
 {% extends 'core/base.html' %}
 {% block content %}
 
-	<!-- <div class="desc">
-		{%load static%}
-		<img src="{% static 'core/images/hero.jpg' %}" alt="">
-		<p class="des">tickets.ma est une plateforme innovante dédiée aux bonnes affaires en ligne. Véritable guichet unique, l’application vous permettent d’acheter en un clic vos tickets d’événements à prix coûtant ou de profiter de deals à prix réduits. Tout est
-			simplifié pour vous permettre d’économiser du temps, de l’énergie et de l’argent. Chaque produit ou service qui vous intéresse fait l’objet d’un compte à rebours.</p>
-	</div>
-	<h1>évenement à decouvrir !!</h1> -->
 
 	<div class="imag " style="margin-top: 10%;">
 
+		{% if events.count > 0 %}
 		<div class="YSS" style="display: flex;">
 			{% for event in events %}
 			<div class="cadre1" style="margin-right: 15px;">
@@ -21,9 +15,11 @@
 					<p>{{event.category.name}}</p>
 				</div>
 				<h3>{{ event.name }}</h3>
-				<i class="fa fa-map-marker" aria-hidden="true">{{ event.location }}</i>
+				<i class="fa fa-map-marker" aria-hidden="true"></i>
+				<span>{{ event.location }}</span>
 				<br>
-				<i class="fa fa-bell" aria-hidden="true">  <b>00</b> j <b> 12</b> h <b>03</b> m <b>45</b> s</i>
+				<i class="fa fa-bell" aria-hidden="true"></i>
+				<span id="countdown{{event.id}}"></span>
 				<br>
 				<p class="de">A PARTIR DE:
 					<div class="prix">{{ event.price }} <b class="MAD">MAD</b> </div>
@@ -36,9 +32,14 @@
 
 				</a>
 			</div>
+
 			{% endfor %}
 		</div>
+		{% else %}
+		<h3>Pas de resultat<h3>
+		{% endif %}
 
     </div>
+
 
 {% endblock %}
