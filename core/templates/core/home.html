@@ -22,25 +22,6 @@
 				</form>
 
 			</a>
-{% comment %}
-			<div class="cadre1" style="margin-right: 15px;">
-				<a href="{% url 'event_detail' event.id %}">
-				<img style="width: 100%; border-radius: 15px;" src={{ event.image.url }} alt=" ">
-				<br>
-				<div class="genre">
-					<p>{{event.category.name}}</p>
-				</div>
-				<h3>{{ event.name }}</h3>
-				<i class="fa fa-map-marker" aria-hidden="true"></i>
-				<span>{{ event.location }}</span>
-				<br>
-				<i class="fa fa-bell" aria-hidden="true"></i>
-				<span id="countdown{{event.id}}"></span>
-				<br>
-
-
-				</a>
-			</div> {% endcomment %}
 
 			{% endfor %}
 		</div>

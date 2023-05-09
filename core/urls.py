@@ -16,4 +16,5 @@ urlpatterns = [
     path('events/buy/', views.buy_ticket, name='buy_ticket'),
 
     path('profile/', views.profile, name='profile'),
+    path('about/', views.about, name='about')
 ]

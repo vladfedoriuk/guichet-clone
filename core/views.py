@@ -93,11 +93,12 @@ def click_jach(request):
         # create order with auth user
         order, created = Order.objects.get_or_create(customer=request.user)
         orderitem, created = OrderItem.objects.get_or_create(order=order, event=event, price=event.price)
+
         if not created:
             orderitem.quantity = orderitem.quantity+1
             orderitem.save()
     # pass the order as the context variable
-    order = Order.objects.filter(customer=request.user)
+    order = Order.objects.filter(customer=request.user).first()
     return render(request, 'core/buy_ticket.html', {'order':order})
 
 
@@ -179,3 +180,6 @@ def profile(request):
 
     return render(request, 'core/profile.html', {'user':user})
 
+
+def about(request):
+    return render(request, "core/about.html")
