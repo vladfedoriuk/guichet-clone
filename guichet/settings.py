@@ -39,6 +39,7 @@ EMAIL_PORT = 587
 EMAIL_USE_TLS = True
 EMAIL_HOST_PASSWORD = "wjgcurjcnwlulshs"
 
+LOGIN_URL = "login"
 
 # Application definition
 
