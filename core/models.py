@@ -13,8 +13,8 @@ class Event(models.Model):
     name = models.CharField(max_length=255)
     description = models.TextField()
     location = models.CharField(max_length=255)
-    image = models.ImageField(upload_to='images/')
-    price = models.DecimalField(max_digits=8,decimal_places=2, blank=True, null=True)
+    image = models.ImageField(upload_to="images/")
+    price = models.DecimalField(max_digits=8, decimal_places=2, blank=True, null=True)
     date = models.DateTimeField(auto_now=True)
     category = models.ForeignKey(Category, on_delete=models.CASCADE)
 
@@ -41,7 +41,7 @@ class Order(models.Model):
 class OrderItem(models.Model):
     event = models.ForeignKey(Event, on_delete=models.SET_NULL, null=True)
     order = models.ForeignKey(Order, on_delete=models.SET_NULL, null=True)
-    price = models.DecimalField(max_digits=8,decimal_places=2, blank=True, null=True)
+    price = models.DecimalField(max_digits=8, decimal_places=2, blank=True, null=True)
     quantity = models.IntegerField(default=1, null=True)
     created = models.DateTimeField(auto_now=True)
 
